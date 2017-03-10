@@ -1,0 +1,32 @@
+---
+- name: modify bashrc(pi)
+  replace: >-
+    dest='/home/pi/.bashrc'
+    backup=yes
+    regexp='^#alias ll'
+    replace='alias ll'
+
+- name: copy bashrc(root)
+  copy: 
+    src: ../files/root.bashrc
+    dest: /root/.bashrc
+    backup: yes
+    owner: root
+    group: root
+    mode: 0644
+
+#  lineinfile: >-
+#    dest='/home/pi/.bashrc'
+#    backup=yes
+#    state=present
+#    regexp='{{ item.regexp }}'
+#    line='{{ item.line }}'
+#  with_items:
+#  - regexp: '^#alias ll \'ls\ -l\''
+#    line:   'alias ll'
+
+- name: apt-get
+  apt:
+    name: git
+    state: latest
+  
